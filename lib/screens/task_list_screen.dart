@@ -97,6 +97,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
             ),
             TextButton(
               child: Text('Eliminar'),
+              style: TextButton.styleFrom(primary: Colors.red),
               onPressed: () {
                 _deleteTask(task);
                 Navigator.of(context).pop();
@@ -112,43 +113,60 @@ class _TaskListScreenState extends State<TaskListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Tareas'),
+        title: Text(
+          'Aplicación lista de tareas',
+          style: TextStyle(fontSize: 24, color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
       ),
-      body: ListView.builder(
-        itemCount: _tasks.length,
-        itemBuilder: (context, index) {
-          final task = _tasks[index];
-          return ListTile(
-            title: Text(
-              task!.title!,
-              style: TextStyle(
-                decoration: task.completed
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.blueGrey[50],
+        ),
+        child: ListView.builder(
+          itemCount: _tasks.length,
+          itemBuilder: (context, index) {
+            final task = _tasks[index];
+            return ListTile(
+              title: Text(
+                task!.title!,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  decoration: task.completed
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                ),
               ),
-            ),
-            leading: Checkbox(
-              value: task.completed,
-              onChanged: (_) => _updateTask(task),
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () => _editTask(task),
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => _confirmDeleteTask(task),
-                ),
-              ],
-            ),
-          );
-        },
+              leading: Checkbox(
+                value: task.completed,
+                onChanged: (_) => _updateTask(task),
+                checkColor: Colors.white,
+                activeColor: Colors.blue,
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    iconSize: 24,
+                    icon: Icon(Icons.edit, color: Colors.blue),
+                    onPressed: () => _editTask(task),
+                  ),
+                  IconButton(
+                    iconSize: 24,
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _confirmDeleteTask(task),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, size: 32),
+        backgroundColor: Colors.blue,
         onPressed: () {
           showDialog(
             context: context,
